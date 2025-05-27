@@ -69,7 +69,8 @@ public class BlockchainClient: SolanaBlockchainClient {
         from account: KeyPair,
         to destination: String,
         amount: UInt64,
-        feePayer: PublicKey? = nil
+        feePayer: PublicKey? = nil,
+        sign: Bool = true
     ) async throws -> PreparedTransaction {
         let feePayer = feePayer ?? account.publicKey
         let fromPublicKey = account.publicKey
@@ -97,7 +98,8 @@ public class BlockchainClient: SolanaBlockchainClient {
         return try await prepareTransaction(
             instructions: [instruction],
             signers: [account],
-            feePayer: feePayer
+            feePayer: feePayer,
+            sign: sign
         )
     }
 
