@@ -35,7 +35,7 @@ public class BlockchainClient: SolanaBlockchainClient {
             feeCalculator = fc
         } else {
             let (lps, minRentExemption) = try await(
-                apiClient.getFeeForMessage(message: latestBlockhash, commitment: nil),
+                apiClient.getFeeForMessage(message: transaction.compileMessage().serialize().base64EncodedString(), commitment: nil),
                 apiClient.getMinimumBalanceForRentExemption(span: 165)
             )
             let lamportsPerSignature = lps ?? 5000
