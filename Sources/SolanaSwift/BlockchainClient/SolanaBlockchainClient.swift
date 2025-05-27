@@ -13,12 +13,14 @@ public protocol SolanaBlockchainClient: AnyObject {
     ///   - feePayer: the feePayer, usually is the first signer
     ///   - recentBlockhash: recentBlockhash, can be fetched lately when the value is nil
     ///   - feeCalculator: the fee calculator, leave it nil to use DefaultFeeCalculator
+    ///   - sign: whether to sign the transaction
     /// - Returns: information of a prepared transaction
     func prepareTransaction(
         instructions: [TransactionInstruction],
         signers: [KeyPair],
         feePayer: PublicKey,
-        feeCalculator: FeeCalculator?
+        feeCalculator: FeeCalculator?,
+        sign: Bool
     ) async throws -> PreparedTransaction
 
     /// Send transaction

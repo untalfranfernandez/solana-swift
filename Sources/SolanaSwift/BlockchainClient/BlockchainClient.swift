@@ -25,7 +25,8 @@ public class BlockchainClient: SolanaBlockchainClient {
         instructions: [TransactionInstruction],
         signers: [KeyPair],
         feePayer: PublicKey,
-        feeCalculator fc: FeeCalculator? = nil
+        feeCalculator fc: FeeCalculator? = nil,
+        sign: Bool = true
     ) async throws -> PreparedTransaction {
         // form transaction
         var transaction = Transaction(instructions: instructions, recentBlockhash: nil, feePayer: feePayer)
@@ -48,7 +49,7 @@ public class BlockchainClient: SolanaBlockchainClient {
         let expectedFee = try feeCalculator.calculateNetworkFee(transaction: transaction)
 
         // if any signers, sign
-        if !signers.isEmpty {
+        if !signers.isEmpty && sign {
             try transaction.sign(signers: signers)
         }
 
